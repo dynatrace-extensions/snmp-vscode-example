@@ -32,7 +32,7 @@ metrics:
       displayName: Last interface status change
       description: Value of 'sysUpTime' when the interface entered its current state
       unit: Second
-      sourceEntityType: snmp:example_network_interface     
+      sourceEntityType: snmp:example_network_interface
   - key: snmp_example.if.bytes_in.count
     metadata:
       displayName: Bytes In
@@ -42,7 +42,7 @@ metrics:
     metadata:
       displayName: Bytes Out
       unit: Count
-      sourceEntityType: snmp:example_network_interface        
+      sourceEntityType: snmp:example_network_interface
   - key: snmp_example.if.status
     metadata:
       displayName: Interface Status
@@ -68,7 +68,7 @@ snmp:
       - key: device.port
         value: this:device.port
       - key: device.address
-        value: this:device.address        
+        value: this:device.address
       - key: device.type
         value: const:example
     subgroups:
@@ -89,7 +89,7 @@ snmp:
             value: const:Extension
         metrics:
           - key: snmp_example.sys.uptime
-            value: oid:1.3.6.1.2.1.1.3.0     
+            value: oid:1.3.6.1.2.1.1.3.0
       - subgroup: NIC status
         featureSet: Interfaces
         table: true
@@ -131,7 +131,7 @@ snmp:
             value: oid:1.3.6.1.2.1.31.1.1.1.10
             type: count
           - key: snmp_example.if.status
-            value: const:1                        
+            value: const:1
 topology:
   types:
     - enabled: true
@@ -145,6 +145,10 @@ topology:
             - sourceType: Metrics
               condition: $prefix(snmp_example)
           role: default
+          attributes:
+            - key: dt.security_context
+              displayName: Security Context
+              pattern: '{dt.security_context}'
     - enabled: true
       name: snmp:example_network_interface
       displayName: Example network Interface
@@ -155,4 +159,8 @@ topology:
           sources:
             - sourceType: Metrics
               condition: $prefix(snmp_example.if)
-          role: default            
+          role: default
+          attributes:
+            - key: dt.security_context
+              displayName: Security Context
+              pattern: '{dt.security_context}'
