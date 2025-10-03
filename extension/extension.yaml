@@ -4,7 +4,6 @@ minDynatraceVersion: "1.318.0"
 author:
   name: "Dynatrace"
 
-
 vars:
   - id: ext.activationtag
     displayName: Extension activation tag
@@ -27,13 +26,31 @@ metrics:
       displayName: Time since the last re-start
       description: The time (in hundredths of a second) since the network management portion of the system was last re-initialized
       unit: Unspecified
-      sourceEntityType: snmp:com_dynatrace_extension_snmp_generic_device
+      sourceEntityType: snmp:example_network_device
   - key: snmp_example.if.lastchange
     metadata:
       displayName: Last interface status change
       description: Value of 'sysUpTime' when the interface entered its current state
+      unit: Second
+      sourceEntityType: snmp:example_network_interface     
+  - key: snmp_example.if.bytes_in.count
+    metadata:
+      displayName: Bytes In
       unit: Count
-      sourceEntityType: snmp:com_dynatrace_extension_snmp_generic_device_interface      
+      sourceEntityType: snmp:example_network_interface
+  - key: snmp_example.if.bytes_out.count
+    metadata:
+      displayName: Bytes Out
+      unit: Count
+      sourceEntityType: snmp:example_network_interface        
+  - key: snmp_example.if.status
+    metadata:
+      displayName: Interface Status
+      unit: Unspecified
+featureSetsMetadata:
+  - id: Interfaces
+    isRecommended: true
+    description: Provides metrics and dimensions for interface metrics. Recommended for complete network device monitoring. Unimportant interfaces can be filtered out.
 
 snmp:
   - group: generic-device
@@ -50,8 +67,10 @@ snmp:
         value: var:ext.activationtag
       - key: device.port
         value: this:device.port
+      - key: device.address
+        value: this:device.address        
       - key: device.type
-        value: const:generic
+        value: const:example
     subgroups:
       - subgroup: Device Info
         table: false
@@ -70,34 +89,7 @@ snmp:
             value: const:Extension
         metrics:
           - key: snmp_example.sys.uptime
-            value: oid:1.3.6.1.2.1.1.3.0
-      - subgroup: generic network interface
-        table: true
-        dimensions:
-          - key: if.name
-            value: oid:1.3.6.1.2.1.31.1.1.1.1
-            filter: var:if_name
-          - key: if.desc
-            value: oid:1.3.6.1.2.1.2.2.1.2
-          - key: oper.status
-            value: oid:1.3.6.1.2.1.2.2.1.8
-            filter: var:if_oper_status
-          - key: admin.status
-            value: oid:1.3.6.1.2.1.2.2.1.7
-            filter: var:if_admin_status
-          - key: mac.address
-            value: oid:1.3.6.1.2.1.2.2.1.6
-            filter: const:$and($not($eq(n/a)), $not($eq( )))
-          - key: if.speed
-            value: oid:1.3.6.1.2.1.31.1.1.1.15
-        metrics:
-          - key: com.dynatrace.extension.network_device.if.bytes_in.count
-            value: oid:1.3.6.1.2.1.31.1.1.1.6
-            type: count
-          - key: com.dynatrace.extension.network_device.if.bytes_out.count
-            value: oid:1.3.6.1.2.1.31.1.1.1.10
-          - key: com.dynatrace.extension.network_device.if.status
-            value: const:1            
+            value: oid:1.3.6.1.2.1.1.3.0     
       - subgroup: NIC status
         featureSet: Interfaces
         table: true
@@ -113,6 +105,7 @@ snmp:
             value: oid:1.3.6.1.2.1.2.2.1.3
           - key: mac.address
             value: oid:1.3.6.1.2.1.2.2.1.6
+            filter: const:$and($not($eq(n/a)), $not($eq( )))
           - key: if.mtu # Largest packet/datagram which can be sent/received on the interface
             value: oid:1.3.6.1.2.1.2.2.1.4
           - key: if.speed
@@ -131,3 +124,35 @@ snmp:
           - key: snmp_example.if.lastchange
             value: oid:1.3.6.1.2.1.2.2.1.9
             type: gauge
+          - key: snmp_example.if.bytes_in.count
+            value: oid:1.3.6.1.2.1.31.1.1.1.6
+            type: count
+          - key: snmp_example.if.bytes_out.count
+            value: oid:1.3.6.1.2.1.31.1.1.1.10
+            type: count
+          - key: snmp_example.if.status
+            value: const:1                        
+topology:
+  types:
+    - enabled: true
+      name: snmp:example_network_device
+      displayName: Example Network Device
+      rules:
+        - idPattern: example_network_device_{device.address}_{device.port}
+          instanceNamePattern: Example Network Device {device.address}:{device.port}
+          # iconPattern: 
+          sources:
+            - sourceType: Metrics
+              condition: $prefix(snmp_example)
+          role: default
+    - enabled: true
+      name: snmp:example_network_interface
+      displayName: Example network Interface
+      rules:
+        - idPattern: example_network_interface_{sys.name}_{mac.address}
+          instanceNamePattern: Example Network Interface - {if.descr}
+          # iconPattern: 
+          sources:
+            - sourceType: Metrics
+              condition: $prefix(snmp_example.if)
+          role: default            
