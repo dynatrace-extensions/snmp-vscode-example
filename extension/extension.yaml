@@ -1,6 +1,6 @@
 #                      Minimal Example Extension - SNMP
 # ==================================================================================================
-# Dynatrace documentation for the data source: https://docs.dynatrace.com/docs/shortlink/sql-reference
+# Dynatrace documentation for the data source: https://docs.dynatrace.com/docs/shortlink/snmp-extensions-reference
 # For general extension yaml documentation: https://docs.dynatrace.com/docs/shortlink/extension-yaml
 #
 # This is a minimal example of how to ingest data. It is not meant to be comprehensive, but rather
