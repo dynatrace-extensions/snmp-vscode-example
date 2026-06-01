@@ -6,10 +6,8 @@
 # This is a minimal example of how to ingest data. It is not meant to be comprehensive, but rather
 # provide a useful starting point to creating custom extensions.
 #
-# --------------------------------------------------------------------------------------------------
 # NOTE: For best results, work with these examples using the VS Code Dynatrace Extensions Add-On.
 # https://marketplace.visualstudio.com/items?itemName=DynatracePlatformExtensions.dynatrace-extensions
-#
 # ==================================================================================================
 
 # Custom extensions must start with the `custom:` prefix.
