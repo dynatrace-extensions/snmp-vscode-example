@@ -1,34 +1,15 @@
 #                      Minimal Example Extension - WMI
 # ==================================================================================================
-# Repositories for each data source can be found in the following lines:
-# ==================================================================================================
-# JDBC   https://github.com/dynatrace-extensions/jdbc-vscode-example
-# SQL    https://github.com/dynatrace-extensions/sql-vscode-example
-# JMX    https://github.com/dynatrace-extensions/jmx-vscode-example
-# SNMP   https://github.com/dynatrace-extensions/snmp-vscode-example
-# PYTHON https://github.com/dynatrace-extensions/python-vscode-example 
-# WMI    https://github.com/dynatrace-extensions/wmi-vscode-example
-# ==================================================================================================
-# Dynatrace documentation for each data source can be found in the following lines:
-# ==================================================================================================
-# JDBC/SQL https://docs.dynatrace.com/docs/shortlink/sql-reference
-# JMX      https://docs.dynatrace.com/docs/shortlink/jmx-extensions-reference
-# SNMP     https://docs.dynatrace.com/docs/shortlink/snmp-extensions-reference
-# PYTHON   https://dt-url.net/7g638yh
-# WMI      https://docs.dynatrace.com/docs/shortlink/wmi-extensions-reference
-# ==================================================================================================
-# For general extesnion yaml guidance, check out:
+# Dynatrace documentation for the data source: https://docs.dynatrace.com/docs/shortlink/wmi-extensions-reference
+# For general extension yaml documentation: https://docs.dynatrace.com/docs/shortlink/extension-yaml
 #
-# https://docs.dynatrace.com/docs/shortlink/extension-yaml
-# ==================================================================================================
-# Purpose:
-#
-# These example extensions exist to provide minimal examples of how to ingest
-# data for each data source. They are not meant to be comprehensive, but rather
+# This is a minimal example of how to ingest data. It is not meant to be comprehensive, but rather
 # provide a useful starting point to creating custom extensions.
-# ==================================================================================================
+#
+# --------------------------------------------------------------------------------------------------
 # NOTE: For best results, work with these examples using the VS Code Dynatrace Extensions Add-On.
 # https://marketplace.visualstudio.com/items?itemName=DynatracePlatformExtensions.dynatrace-extensions
+#
 # ==================================================================================================
 
 # Custom extensions must start with the `custom:` prefix.
